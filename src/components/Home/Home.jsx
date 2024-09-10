@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import "./Home.css";
+import { evaluate } from "mathjs";
 
 const Home = () => {
   const [input, setInput] = useState("");
@@ -22,9 +23,19 @@ const Home = () => {
     setResult("");
   };
 
+  // const calculateResult = () => {
+  //   try {
+  //     const evaluatedResult = new Function("return " + input)();
+  //     setResult(evaluatedResult);
+  //     setHistory([...history, { expression: input, result: evaluatedResult }]);
+  //   } catch (err) {
+  //     setResult("Error");
+  //   }
+  // };
+
   const calculateResult = () => {
     try {
-      const evaluatedResult = new Function("return " + input)();
+      const evaluatedResult = evaluate(input); // Safely evaluate the input
       setResult(evaluatedResult);
       setHistory([...history, { expression: input, result: evaluatedResult }]);
     } catch (err) {
@@ -50,7 +61,7 @@ const Home = () => {
         setInput((prevInput) => `Math.tan(${prevInput})`);
         break;
       case "log":
-        setInput((prevInput) => `Math.log10(${prevInput})`); 
+        setInput((prevInput) => `Math.log10(${prevInput})`);
         break;
       case "ln":
         setInput((prevInput) => `Math.log(${prevInput})`);
